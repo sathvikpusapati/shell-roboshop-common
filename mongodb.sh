@@ -2,7 +2,7 @@
 
 source  ./common.sh
 
-check_root()
+check_root
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 
@@ -24,4 +24,4 @@ VALIDATE $? "Allowing remote connection to MONGODB"
 systemctl restart mongod &>> $logfile
 VALIDATE $? "MONGODB RESTART" 
 
-print_total_time()
+print_total_time
