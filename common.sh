@@ -17,7 +17,7 @@ logfile="$FOLDER/$log_NAME.log"
 
 START_TIME=$(date +%s)
 
-echo "SCRIPT executed at : $(date) " | tee -a $logfile
+echo "SCRIPT executed at : $(date) " 
 
 sudo mkdir -p $FOLDER
 
