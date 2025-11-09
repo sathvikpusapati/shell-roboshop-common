@@ -87,7 +87,7 @@ systemd_setup()
 
 app_restart()
 {
-    systectl restart $app_name
+    systemctl restart $app_name
     VALIDATE $? "restarted $app_name"
 }
 
