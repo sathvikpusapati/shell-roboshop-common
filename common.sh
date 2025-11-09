@@ -55,6 +55,18 @@ nodejs_setup()
     VALIDATE $? "installing dependencies"
 }
 
+java_setup()
+{
+    dnf install maven -y &>> $logfile
+    VALIDATE $? "installing maven"
+
+    mvn clean package &>> $logfile
+    VALIDATE $? "packing the package"
+
+    mv target/shipping-1.0.jar shipping.jar  &>> $logfile
+    VALIDATE $? "renaming artifact"
+
+}
 app_setup()
 {
     id roboshop &>> $logfile
