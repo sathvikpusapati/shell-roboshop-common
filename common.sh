@@ -9,6 +9,7 @@ FOLDER="/var/log/SHELL-ROBOSHOP"
 
 log_NAME=$( echo $0 | cut -d "." -f1)
 
+MONGODB_IP=mongodb.thanunenu.space
 
 SCRIPT_DIR=/home/ec2-user/shell-ROBOSHOP
 
@@ -37,6 +38,57 @@ VALIDATE()
     else
         echo -e "$2 $G  SUCCESS $N" | tee -a $logfile
     fi    
+}
+
+nodejs_setup()
+{
+    dnf module disable nodejs -y &>> $logfile
+    VALIDATE $? "DISABLING NODEJS"
+
+    dnf module enable nodejs:20 -y &>> $logfile
+    VALIDATE $? "ENABLING NODEJS 20"
+
+    dnf install nodejs -y &>> $logfile
+    VALIDATE $? "INSTALLING NODEJS"
+
+    npm install &>> $logfile
+    VALIDATE $? "installing dependencies"
+}
+
+app_setup()
+{
+    mkdir -p /app &>> $logfile
+    VALIDATE $? "CREATING APP DIRECTORY"
+
+    curl -o /tmp/c$app_name.zip https://roboshop-artifacts.s3.amazonaws.com/$app_name-v3.zip 
+    VALIDATE $? "downloading $app_name application"
+
+
+    cd /app &>> $logfile
+    VALIDATE $? "CHANGING DIRECTORY"
+
+    rm -rf /app/*  &>> $logfile
+    VALIDATE $? "removing existing code"
+
+    unzip /tmp/$app_name.zip &>> $logfile
+    VALIDATE $? "UNZIPPING DOWNLOADED CODE"
+}
+
+systemd_setup()
+{
+    cp $SCRIPT_DIR/$app_name.service /etc/systemd/system/$app_name.service &>> $logfile
+    VALIDATE $? "copying $app_name service file"
+
+    systemctl daemon-reload &>> $logfile
+    VALIDATE $? "reloading "
+
+    systemctl enable $app_name &>> $logfile
+}
+
+app_restart()
+{
+    systectl restart $app_name
+    VALIDATE $? "restarted $app_name"
 }
 
 print_total_time()
