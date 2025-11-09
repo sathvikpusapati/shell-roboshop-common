@@ -67,6 +67,15 @@ java_setup()
     VALIDATE $? "renaming artifact"
 
 }
+
+python_setup()
+{
+    dnf install python3 gcc python3-devel -y  &>> $logfile
+    VALIDATE $? "python installation is"
+
+    pip3 install -r requirements.txt &>> $logfile
+VALIDATE $? " installing dependencies "
+}
 app_setup()
 {
     id roboshop &>> $logfile
