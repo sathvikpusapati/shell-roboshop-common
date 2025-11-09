@@ -41,7 +41,7 @@ VALIDATE()
 
 print_total_time()
 {
-    END_TIME=$(date +%S)
+    END_TIME=$(date +%s)
     TOTAL_TIME=$(( $END_TIME - $START_TIME ))
     echo -e " SCRIPT EXECUTED IN $Y $TOTAL_TIME seconds $N"
 }
