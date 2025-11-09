@@ -11,7 +11,7 @@ log_NAME=$( echo $0 | cut -d "." -f1)
 
 MONGODB_IP=mongodb.thanunenu.space
 
-SCRIPT_DIR=/home/ec2-user/shell-ROBOSHOP
+SCRIPT_DIR=/home/ec2-user/shell-roboshop-common
 
 logfile="$FOLDER/$log_NAME.log"
 
