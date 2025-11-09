@@ -57,6 +57,15 @@ nodejs_setup()
 
 app_setup()
 {
+    id roboshop &>> $logfile
+    if [ $? -ne 0 ]; then
+
+        useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $logfile
+        VALIDATE $? "adding system user for roboshop"
+    else
+
+        echo -e "SYSTEM USER ALRAEDY CREATED $Y SKIPPING....$N"
+    fi
     mkdir -p /app &>> $logfile
     VALIDATE $? "CREATING APP DIRECTORY"
 
