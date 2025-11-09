@@ -5,7 +5,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-FOLDER="/var/log/SHELL-ROBOSHOP"
+FOLDER="/var/log/shell-roboshop-common"
 
 log_NAME=$( echo $0 | cut -d "." -f1)
 
