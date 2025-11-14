@@ -16,10 +16,15 @@ VALIDATE $? "enabling  rabbitmq"
 systemctl start rabbitmq-server
 VALIDATE $? "starting rabbitmq"
 
-rabbitmqctl add_user roboshop roboshop123 &>> $logfile
-VALIDATE $? "creatying roboshop user"
+rabbitmqctl list_users | grep roboshop &>> $logfile
 
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $logfile
-VALIDATE $? "setting permission ton roboshop user "
+if [ $? -ne 0 ]; then
+    rabbitmqctl add_user roboshop roboshop123 &>> $logfile
+    VALIDATE $? "creatying roboshop user"
 
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $logfile
+    VALIDATE $? "setting permission ton roboshop user "
+else
+    echo -e "USER ALREADY THERE $Y SKIPPING $N" | tee -a $logfile
+fi
 print_total_time
